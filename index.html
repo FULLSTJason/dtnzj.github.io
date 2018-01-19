@@ -303,21 +303,48 @@
 </script>
 
 <hr>
-<p>title: 卡尔曼滤波简介<br>date: 2018-01-19 16:39:42</p>
-<h2 id="tags"><a href="#tags" class="headerlink" title="tags:"></a>tags:</h2><p>关于卡尔曼滤波器原理的介绍可以看这一篇文章，写的比较好 [1]</p>
+<p>title: 卡尔曼滤波简介(草稿)<br>date: 2018-01-19 16:39:42</p>
+<h2 id="tags-滤波器"><a href="#tags-滤波器" class="headerlink" title="tags: 滤波器"></a>tags: 滤波器</h2><p>关于卡尔曼滤波器原理的介绍可以看这一篇文章，写的比较好 [1]</p>
 <p>[1] <a href="http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull" target="_blank" rel="noopener">http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull</a></p>
 <p>知乎上给了一个比较好的matlab实例</p>
 <p><a href="https://zhuanlan.zhihu.com/p/29191795" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29191795</a></p>
 <p>我的代码也是在他的基础上改写出来的。</p>
 <p><img src="http://www.bzarg.com/wp-content/uploads/2015/08/kalflow.png" alt="KF结构图"></p>
 <p>[comment]: &lt;&gt; <img src="\kalflow.png" alt="KF结构图"></p>
-<h2 id="5个核心公式"><a href="#5个核心公式" class="headerlink" title="5个核心公式"></a>5个核心公式</h2><h3 id="预测部分："><a href="#预测部分：" class="headerlink" title="预测部分："></a>预测部分：</h3><p>$$<br>    K  = Pp <em> H^{T} </em> ( H <em> Pp </em> H^{T} + R)^{-1};<br>    Xu = ( I - K <em> H ) </em> Xp + K <em> x;<br>    Pu = ( I - K </em> H ) * Pp;<br>$$</p>
-<pre><code>K  = Pp * H&apos; * ( H * Pp * H&apos; + R)^-1;
+<h2 id="5个核心公式"><a href="#5个核心公式" class="headerlink" title="5个核心公式"></a>5个核心公式</h2><h3 id="预测部分："><a href="#预测部分：" class="headerlink" title="预测部分："></a>预测部分：</h3><p>$$  K  = Pp <em> H^{T} </em> ( H <em> Pp </em> H^{T} + R)^{-1};  $$</p>
+<pre><code>Xu = ( I - K * H ) * Xp + K * x;
+Pu = ( I - K * H ) * Pp;
+
+
+K  = Pp * H&apos; * ( H * Pp * H&apos; + R)^-1;
 Xu = ( I - K * H ) * Xp + K * x;
 Pu = ( I - K * H ) * Pp;
 </code></pre><h3 id="拟合部分："><a href="#拟合部分：" class="headerlink" title="拟合部分："></a>拟合部分：</h3><pre><code>Xp = F * Xu;
 Pp = F * Pu * F&apos; + Q;
-</code></pre><h2 id="单个维度的卡尔曼滤波器实例："><a href="#单个维度的卡尔曼滤波器实例：" class="headerlink" title="单个维度的卡尔曼滤波器实例："></a>单个维度的卡尔曼滤波器实例：</h2><pre><code class="MATLAB"><span class="function"><span class="keyword">function</span> <span class="params">[ ]</span> = <span class="title">kalmanTest</span><span class="params">(  )</span></span>
+</code></pre><p>含义说明：</p>
+<table>
+<thead>
+<tr>
+<th>left</th>
+<th>center</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K</td>
+<td>卡尔曼系数</td>
+</tr>
+<tr>
+<td>Pp</td>
+<td>XX矩阵</td>
+</tr>
+<tr>
+<td>H</td>
+<td>采样矩阵</td>
+</tr>
+</tbody>
+</table>
+<h2 id="单个维度的卡尔曼滤波器实例："><a href="#单个维度的卡尔曼滤波器实例：" class="headerlink" title="单个维度的卡尔曼滤波器实例："></a>单个维度的卡尔曼滤波器实例：</h2><pre><code class="MATLAB"><span class="function"><span class="keyword">function</span> <span class="params">[ ]</span> = <span class="title">kalmanTest</span><span class="params">(  )</span></span>
 <span class="comment">%UNTITLED6 Summary of this function goes here</span>
 <span class="comment">%   Detailed explanation goes here</span>
 
@@ -370,7 +397,6 @@ hold off
 <span class="comment">%  y(k+1) = H * X(k+1) + V(k+1); ????</span>
 
 <span class="keyword">persistent</span> Xu Pu I Xp Pp
-<span class="comment">% N = length(x);</span>
 T = <span class="number">1</span>;         <span class="comment">%  ???????1</span>
 A = [<span class="number">1</span> T;<span class="number">0</span> <span class="number">1</span>]; <span class="comment">%  ??????</span>
 G = [T^<span class="number">2</span>/<span class="number">2</span>;T]; <span class="comment">%  ?????</span>
@@ -430,9 +456,9 @@ plot(x(<span class="number">1</span>,:), x(<span class="number">2</span>,:),<spa
 plot(y(<span class="number">1</span>,:), y(<span class="number">2</span>,:),<span class="string">'color'</span>,[<span class="number">1</span> <span class="number">0.6</span> <span class="number">0</span>],<span class="string">'linewidth'</span>,<span class="number">2</span>);
 plot(s(<span class="number">1</span>,:), s(<span class="number">2</span>,:),<span class="string">'color'</span>,[<span class="number">1</span> <span class="number">0.9</span> <span class="number">0</span>],<span class="string">'linewidth'</span>,<span class="number">2</span>);
 legend(<span class="string">'??'</span>,<span class="string">'??'</span>,<span class="string">'??'</span>);
-<span class="comment">% axis tight</span>
 hold off
-figure(<span class="number">2</span>);
+
+figure(<span class="number">2</span>)
 plot(t,x(<span class="number">1</span>,:),t,y(<span class="number">1</span>,:), t,s(<span class="number">1</span>,:),  <span class="string">'linewidth'</span>,<span class="number">2</span>); 
 legend(<span class="string">'reserved'</span>,<span class="string">'filted'</span>,<span class="string">'origin'</span>);
 figure(<span class="number">3</span>);
