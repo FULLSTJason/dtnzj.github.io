@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="南志捷的个人网站">
 <meta property="og:description" content="卡尔曼滤波器的原理关于KF原理的介绍可以看这一篇文章，写的比较好英文原版http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull 中文翻译版: 知乎上给了一个比较好的matlab实例,我的代码也是在他的基础上改写出来的。https://zhuanlan.zhihu.com/p/291">
 <meta property="og:image" content="http://www.bzarg.com/wp-content/uploads/2015/08/kalflow.png">
-<meta property="og:updated_time" content="2018-01-19T15:00:44.447Z">
+<meta property="og:updated_time" content="2018-01-19T15:02:32.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卡尔曼滤波简介(草稿)">
 <meta name="twitter:description" content="卡尔曼滤波器的原理关于KF原理的介绍可以看这一篇文章，写的比较好英文原版http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull 中文翻译版: 知乎上给了一个比较好的matlab实例,我的代码也是在他的基础上改写出来的。https://zhuanlan.zhihu.com/p/291">
@@ -371,15 +371,16 @@
 <span class="comment">%UNTITLED6 Summary of this function goes here</span>
 <span class="comment">%   Detailed explanation goes here</span>
 
-clear functions
+clear functions 
 t = (<span class="number">0</span>: <span class="number">0.001</span>: <span class="number">3</span>);
 n = <span class="built_in">randn</span>([<span class="number">1</span>, length(t)]); 
 s = <span class="built_in">sin</span>(<span class="number">2</span> * <span class="built_in">pi</span> * <span class="number">1</span> * t );
 x = s + n;
 R = cov(n(<span class="number">1</span>,:)); 
-
+<span class="comment">% plot(x(1,:), x(2,:))</span>
 
 <span class="comment">%%</span>
+<span class="comment">% q = 1e-6;</span>
 Q = <span class="number">1e-7</span>;
 y = <span class="built_in">zeros</span>(<span class="built_in">length</span>(t), <span class="number">1</span>)';
 yp = y;
@@ -388,7 +389,6 @@ hold on;
     [y(i), yp(i)] = KalmanFilter2(x(<span class="built_in">i</span>),Q,R);
 <span class="keyword">end</span>
 hold off
-
 <span class="comment">%%</span>
 e = s - y;
 figure(<span class="number">1</span>);
@@ -397,41 +397,40 @@ plot(t, x,<span class="string">'color'</span>,[<span class="number">0.2</span> <
 plot(t, y,<span class="string">'color'</span>,[<span class="number">1</span> <span class="number">0.6</span> <span class="number">0</span>],<span class="string">'linewidth'</span>,<span class="number">2</span>);
 plot(t, s,<span class="string">'color'</span>,[<span class="number">1</span> <span class="number">0.9</span> <span class="number">0</span>],<span class="string">'linewidth'</span>,<span class="number">2</span>);
 legend(<span class="string">'reserved'</span>,<span class="string">'filted'</span>,<span class="string">'origin'</span>);
-axis tight
 hold off
-
 <span class="keyword">end</span>
 
 <span class="function"><span class="keyword">function</span> <span class="params">[Xout1, Xout2]</span> = <span class="title">KalmanFilter2</span><span class="params">(x,Q,R)</span></span>
 
 <span class="comment">% --------------------------------</span>
 <span class="comment">%  T = KalmanFilter(s,Q,R)</span>
-<span class="comment">%  s   ??????</span>
-<span class="comment">%  Q   ????????</span>
-<span class="comment">%  R   ????????</span>
+<span class="comment">%  s   位移，列向量</span>
+<span class="comment">%  Q   状态误差协方差矩</span>
+<span class="comment">%  R   观测误差协方差矩</span>
 <span class="comment">% --------------------------------</span>
-<span class="comment">%  ????????:</span>
+<span class="comment">%  建立质点运动方程:</span>
 <span class="comment">%  S(k+1) = 1*S(k) + T*V(k) + 0.5*T^2*a</span>
 <span class="comment">%  V(k+1) = 0*S(k) + 1*V(k) + T*a</span>
-<span class="comment">%  ??????:</span>
+<span class="comment">%  建立观测方程:</span>
 <span class="comment">%  y(k+1) = S(k+1) + V(k+1)</span>
-<span class="comment">%  ??</span>
-<span class="comment">%  X(k+1) = A * X(k) + G*W(k+1); ????</span>
-<span class="comment">%  y(k+1) = H * X(k+1) + V(k+1); ????</span>
+<span class="comment">%  即：</span>
+<span class="comment">%  X(k+1) = A * X(k) + G*W(k+1); 预测模型</span>
+<span class="comment">%  y(k+1) = H * X(k+1) + V(k+1); 观测模型</span>
 
 <span class="keyword">persistent</span> Xu Pu I Xp Pp
-T = <span class="number">1</span>;         <span class="comment">%  ???????1</span>
-A = [<span class="number">1</span> T;<span class="number">0</span> <span class="number">1</span>]; <span class="comment">%  ??????</span>
-G = [T^<span class="number">2</span>/<span class="number">2</span>;T]; <span class="comment">%  ?????</span>
-H = [<span class="number">1</span> <span class="number">0</span>];     <span class="comment">%  ????</span>
+T = <span class="number">1</span>;         <span class="comment">%  采样间隔默认为1</span>
+A = [<span class="number">1</span> T;<span class="number">0</span> <span class="number">1</span>]; <span class="comment">%  状态转移矩阵</span>
+G = [T^<span class="number">2</span>/<span class="number">2</span>;T]; <span class="comment">%  控制量矩阵</span>
+H = [<span class="number">1</span> <span class="number">0</span>];     <span class="comment">%  观测矩阵</span>
 
-<span class="comment">% ????????</span>
-<span class="keyword">if</span> <span class="built_in">isempty</span>(Xu) || <span class="built_in">isempty</span>(Pu) || <span class="built_in">isempty</span>(I) || <span class="built_in">isempty</span>(Xp) || <span class="built_in">isempty</span>(Pp)
+
+<span class="keyword">if</span> <span class="built_in">isempty</span>(Xu) || <span class="built_in">isempty</span>(Pu) || <span class="built_in">isempty</span>(I) || <span class="built_in">isempty</span>(Xp) || <span class="built_in">isempty</span>(Pp)<span class="comment">%|| isempty('T','var')</span>
     Xu = [x; <span class="number">0</span>];
     Pu = [<span class="number">0</span> <span class="number">0</span>;<span class="number">0</span> <span class="number">0</span>];
     I  = [<span class="number">1</span> <span class="number">0</span>;<span class="number">0</span> <span class="number">1</span>];
     Xp = [<span class="number">0</span>; <span class="number">0</span>];
     Pp = A * Pu * A' + G * Q * G';
+    <span class="built_in">disp</span>(<span class="string">'init'</span>);
 <span class="keyword">end</span>
 
 K  = Pp * H' * ( H * Pp * H' + R)^<span class="number">-1</span>;
@@ -448,14 +447,12 @@ Xout2 = Xp(<span class="number">1</span>);
 <h2 id="对于两个维度的卡尔曼滤波器实例："><a href="#对于两个维度的卡尔曼滤波器实例：" class="headerlink" title="对于两个维度的卡尔曼滤波器实例："></a>对于两个维度的卡尔曼滤波器实例：</h2><pre><code class="matlab"><span class="function"><span class="keyword">function</span> <span class="params">[]</span> = <span class="title">kalmanXYtest</span><span class="params">( )</span></span>
 <span class="comment">%UNTITLED4 Summary of this function goes here</span>
 <span class="comment">%   Detailed explanation goes here</span>
-<span class="comment">% close all</span>
 <span class="comment">% clear functions</span>
 t = (<span class="number">0</span>: <span class="number">0.01</span>: <span class="number">3</span>);
 n = <span class="built_in">randn</span>([<span class="number">2</span>, length(t)]); 
 s = [ sin(<span class="number">2</span> * pi * <span class="number">1</span> * t ); cos(<span class="number">2</span> * pi * <span class="number">1</span> * t)]*<span class="number">2</span>; <span class="comment">%sawtooth(2*pi*50*x,0.5)</span>
 x = s + n;
 R = [cov(n(<span class="number">1</span>,:)) <span class="number">0</span>; <span class="number">0</span> cov(n(<span class="number">2</span>,:))]; 
-<span class="comment">% plot(x(1,:), x(2,:))</span>
 
 <span class="comment">%%</span>
 q = <span class="number">5e-3</span>;
@@ -468,25 +465,21 @@ yp = y;
     [y(:,i), yp(:,i)] = KalmanFilterXY(x(:,<span class="built_in">i</span>),Q,R);
 <span class="keyword">end</span>
 y = y([<span class="number">1</span>,<span class="number">3</span>],:);
-
 <span class="comment">%%</span>
-e = y(<span class="number">1</span>,:) - y(<span class="number">2</span>,:);
+<span class="comment">%e = y(1,:) - y(2,:);</span>
 figure(<span class="number">1</span>);
-
 hold on;
 plot(x(<span class="number">1</span>,:), x(<span class="number">2</span>,:),<span class="string">'color'</span>,[<span class="number">0.2</span> <span class="number">0.5</span> <span class="number">0.8</span>],<span class="string">'linewidth'</span>,<span class="number">2</span>);
 plot(y(<span class="number">1</span>,:), y(<span class="number">2</span>,:),<span class="string">'color'</span>,[<span class="number">1</span> <span class="number">0.6</span> <span class="number">0</span>],<span class="string">'linewidth'</span>,<span class="number">2</span>);
 plot(s(<span class="number">1</span>,:), s(<span class="number">2</span>,:),<span class="string">'color'</span>,[<span class="number">1</span> <span class="number">0.9</span> <span class="number">0</span>],<span class="string">'linewidth'</span>,<span class="number">2</span>);
 legend(<span class="string">'??'</span>,<span class="string">'??'</span>,<span class="string">'??'</span>);
 hold off
-
-figure(<span class="number">2</span>)
+figure(<span class="number">2</span>);
 plot(t,x(<span class="number">1</span>,:),t,y(<span class="number">1</span>,:), t,s(<span class="number">1</span>,:),  <span class="string">'linewidth'</span>,<span class="number">2</span>); 
 legend(<span class="string">'reserved'</span>,<span class="string">'filted'</span>,<span class="string">'origin'</span>);
 figure(<span class="number">3</span>);
 plot(t,x(<span class="number">2</span>,:),t,y(<span class="number">2</span>,:), t,s(<span class="number">2</span>,:),  <span class="string">'linewidth'</span>,<span class="number">2</span>);
 legend(<span class="string">'reserved'</span>,<span class="string">'filted'</span>,<span class="string">'origin'</span>);
-
 <span class="keyword">end</span>
 
 
@@ -495,26 +488,28 @@ legend(<span class="string">'reserved'</span>,<span class="string">'filted'</spa
 
 <span class="comment">% --------------------------------</span>
 <span class="comment">%  T = KalmanFilter(s,Q,R)</span>
-<span class="comment">%  s   ??????</span>
-<span class="comment">%  Q   ????????</span>
-<span class="comment">%  R   ????????</span>
+<span class="comment">%  s   位移，列向量</span>
+<span class="comment">%  Q   状态误差协方差矩</span>
+<span class="comment">%  R   观测误差协方差矩</span>
 <span class="comment">% --------------------------------</span>
-<span class="comment">%  ????????:</span>
+<span class="comment">%  建立质点运动方程:</span>
 <span class="comment">%  S(k+1) = 1*S(k) + T*V(k) + 0.5*T^2*a</span>
 <span class="comment">%  V(k+1) = 0*S(k) + 1*V(k) + T*a</span>
-<span class="comment">%  ??????:</span>
+<span class="comment">%  建立观测方程:</span>
 <span class="comment">%  y(k+1) = S(k+1) + V(k+1)</span>
-<span class="comment">%  ??</span>
-<span class="comment">%  X(k+1) = A * X(k) + G*W(k+1); ????</span>
-<span class="comment">%  y(k+1) = H * X(k+1) + V(k+1); ????</span>
+<span class="comment">%  即：</span>
+<span class="comment">%  X(k+1) = A * X(k) + G*W(k+1); 预测模型</span>
+<span class="comment">%  y(k+1) = H * X(k+1) + V(k+1); 观测模型</span>
 
 <span class="keyword">persistent</span> Xu Pu I Xp Pp
-T = <span class="number">1</span>;         <span class="comment">%  ???????1</span>
-F = [<span class="number">1</span> T <span class="number">0</span> <span class="number">0</span>; <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>; <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> T; <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span>]; <span class="comment">%  ??????</span>
-<span class="comment">% G = [T^2/2 0; T 0; 0 T^2/2; 0 T]; %  ?????</span>
-H = [<span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>];     <span class="comment">%  ????</span>
+T = <span class="number">1</span>;         <span class="comment">%  采样间隔默认为1</span>
+F = [<span class="number">1</span> T <span class="number">0</span> <span class="number">0</span>; <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>; <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> T; <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span>]; <span class="comment">%  状态转移矩阵</span>
+<span class="comment">% G = [T^2/2 0; T 0; 0 T^2/2; 0 T]; %  控制量矩阵</span>
+H = [<span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>];     <span class="comment">%  观测矩阵</span>
 
-<span class="keyword">if</span> <span class="built_in">isempty</span>(Xu) || <span class="built_in">isempty</span>(Pu) || <span class="built_in">isempty</span>(I) || <span class="built_in">isempty</span>(Xp) || <span class="built_in">isempty</span>(Pp)
+<span class="comment">% </span>
+<span class="keyword">if</span> <span class="built_in">isempty</span>(Xu) || <span class="built_in">isempty</span>(Pu) || <span class="built_in">isempty</span>(I) || <span class="built_in">isempty</span>(Xp) || <span class="built_in">isempty</span>(Pp)<span class="comment">%|| isempty('T','var')</span>
+<span class="comment">%     Xu = [x; [0; 0]];</span>
     Pu = <span class="built_in">eye</span>(<span class="number">4</span>, <span class="number">4</span>);
     I  = <span class="built_in">eye</span>(<span class="number">4</span>);
     Xp = <span class="built_in">zeros</span>(<span class="number">4</span>, <span class="number">1</span>);
