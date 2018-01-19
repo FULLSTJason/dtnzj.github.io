@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="title: 卡尔曼滤波简介(草稿)date: 2018-01-19 16:39:42 tags: 滤波器   关于卡尔曼滤波器原理的介绍可以看这一篇文章，写的比较好 [1] [1] http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull 知乎上给了一个比较好的matlab实例 htt">
+<meta name="description" content="title: 卡尔曼滤波简介(草稿)date: 2018-01-19 16:39:42 tags: 滤波器   关于卡尔曼滤波器原理的介绍可以看这一篇文章，写的比较好 [1] [1] http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull 知乎上给了一个比较好的matlab实例\htt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="南志捷的个人网站">
 <meta property="og:url" content="http://yoursite.com/2018/01/19/卡尔曼滤波简介/index.html">
 <meta property="og:site_name" content="南志捷的个人网站">
-<meta property="og:description" content="title: 卡尔曼滤波简介(草稿)date: 2018-01-19 16:39:42 tags: 滤波器   关于卡尔曼滤波器原理的介绍可以看这一篇文章，写的比较好 [1] [1] http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull 知乎上给了一个比较好的matlab实例 htt">
+<meta property="og:description" content="title: 卡尔曼滤波简介(草稿)date: 2018-01-19 16:39:42 tags: 滤波器   关于卡尔曼滤波器原理的介绍可以看这一篇文章，写的比较好 [1] [1] http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull 知乎上给了一个比较好的matlab实例\htt">
 <meta property="og:image" content="http://www.bzarg.com/wp-content/uploads/2015/08/kalflow.png">
 <meta property="og:image" content="http://yoursite.com/kalflow.png">
-<meta property="og:updated_time" content="2018-01-19T12:55:02.273Z">
+<meta property="og:updated_time" content="2018-01-19T14:41:31.885Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="南志捷的个人网站">
-<meta name="twitter:description" content="title: 卡尔曼滤波简介(草稿)date: 2018-01-19 16:39:42 tags: 滤波器   关于卡尔曼滤波器原理的介绍可以看这一篇文章，写的比较好 [1] [1] http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull 知乎上给了一个比较好的matlab实例 htt">
+<meta name="twitter:description" content="title: 卡尔曼滤波简介(草稿)date: 2018-01-19 16:39:42 tags: 滤波器   关于卡尔曼滤波器原理的介绍可以看这一篇文章，写的比较好 [1] [1] http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull 知乎上给了一个比较好的matlab实例\htt">
 <meta name="twitter:image" content="http://www.bzarg.com/wp-content/uploads/2015/08/kalflow.png">
 
 
@@ -187,7 +187,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -197,7 +197,17 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
           </a>
         </li>
       
@@ -261,7 +271,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-19T16:39:42+08:00">
                 2018-01-19
@@ -303,32 +313,26 @@
       
         <hr>
 <p>title: 卡尔曼滤波简介(草稿)<br>date: 2018-01-19 16:39:42</p>
-<h2 id="tags-滤波器"><a href="#tags-滤波器" class="headerlink" title="tags: 滤波器"></a>tags: 滤波器</h2><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+<h2 id="tags-滤波器"><a href="#tags-滤波器" class="headerlink" title="tags: 滤波器"></a>tags: 滤波器</h2><script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
 <p>关于卡尔曼滤波器原理的介绍可以看这一篇文章，写的比较好 [1]</p>
 <p>[1] <a href="http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull" target="_blank" rel="noopener">http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull</a></p>
-<p>知乎上给了一个比较好的matlab实例</p>
-<p><a href="https://zhuanlan.zhihu.com/p/29191795" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29191795</a></p>
+<p>知乎上给了一个比较好的matlab实例\<br><a href="https://zhuanlan.zhihu.com/p/29191795" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29191795</a></p>
 <p>我的代码也是在他的基础上改写出来的。</p>
 <p><img src="http://www.bzarg.com/wp-content/uploads/2015/08/kalflow.png" alt="KF结构图"></p>
 <p>[comment]: &lt;&gt; <img src="\kalflow.png" alt="KF结构图"></p>
-<h2 id="5个核心公式"><a href="#5个核心公式" class="headerlink" title="5个核心公式"></a>5个核心公式</h2><h3 id="预测部分："><a href="#预测部分：" class="headerlink" title="预测部分："></a>预测部分：</h3><p>$$  K  = Pp <em> H^{T} </em> ( H <em> Pp </em> H^{T} + R)^{-1};  $$</p>
-<pre><code>Xu = ( I - K * H ) * Xp + K * x;
-Pu = ( I - K * H ) * Pp;
-
-
-K  = Pp * H&apos; * ( H * Pp * H&apos; + R)^-1;
-Xu = ( I - K * H ) * Xp + K * x;
-Pu = ( I - K * H ) * Pp;
-</code></pre><h3 id="拟合部分："><a href="#拟合部分：" class="headerlink" title="拟合部分："></a>拟合部分：</h3><pre><code>Xp = F * Xu;
-Pp = F * Pu * F&apos; + Q;
-</code></pre><p>含义说明：</p>
+<p>究其本质,卡尔曼滤波就是根据滤波器的上一组数据预测一个值, 然后把这个结果和现有的值进行数据融合,之后得到最终输出. 同时,在滤波器滤波的过程中,也会对这个融合过程进行迭代以便得到最佳的数据融合方式.</p>
+<p>卡尔曼滤波器的实现原理很多,前面也给出了一些介绍的比较好的网址,在此就不再赘述.</p>
+<h2 id="5个核心公式"><a href="#5个核心公式" class="headerlink" title="5个核心公式"></a>5个核心公式</h2><h3 id="预测部分："><a href="#预测部分：" class="headerlink" title="预测部分："></a>预测部分：</h3><p>$$<br>\begin{eqnarray}<br>K  =&amp; P<em>{p} H^{T} ( H P</em>{p} H^{T} + R)^{-1}; \tag{1}\\<br>X<em>{u} =&amp; ( I - KH ) X</em>{p} + Kx;\tag{2}\\<br>P<em>{u} =&amp; ( I - KH ) P</em>{p};\tag{3}<br>\end{eqnarray}<br>$$<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">K  = Pp * H' * ( H * Pp * H' + R)^<span class="number">-1</span>;</div><div class="line">Xu = ( I - K * H ) * Xp + K * x;</div><div class="line">Pu = ( I - K * H ) * Pp;</div></pre></td></tr></table></figure></p>
+<h3 id="融合部分："><a href="#融合部分：" class="headerlink" title="融合部分："></a>融合部分：</h3><p>$$<br>\begin{eqnarray}<br>X<em>{p} =&amp; FX</em>{u} + B<em>{k}u</em>{k};\tag{4}\\<br>P<em>{p} =&amp; FP</em>{u}F^{T} + Q;\tag{5}<br>\end{eqnarray}<br>$$</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Xp = F * Xu;</div><div class="line">Pp = F * Pu * F' + Q;</div></pre></td></tr></table></figure>
+<p>含义说明：()</p>
 <table>
 <thead>
 <tr>
-<th>left</th>
-<th>center</th>
+<th>参数名</th>
+<th>含义</th>
 </tr>
 </thead>
 <tbody>
@@ -344,6 +348,37 @@ Pp = F * Pu * F&apos; + Q;
 <td>H</td>
 <td>采样矩阵</td>
 </tr>
+<tr>
+<td>R</td>
+<td>采样标准差</td>
+</tr>
+<tr>
+<td>Xu</td>
+<td>滤波后的位置参数</td>
+</tr>
+<tr>
+<td>I</td>
+<td>单位矩阵</td>
+</tr>
+<tr>
+<td>Xp</td>
+<td>根据上一位置预测得到的位置参数</td>
+</tr>
+<tr>
+<td>x</td>
+<td>传感器采集到的参数，或者称之为滤波器的输入参数</td>
+</tr>
+<tr>
+<td>Pu</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>系统噪声</td>
+</tr>
+<tr>
+<td>F</td>
+<td>转换矩阵</td>
+</tr>
 </tbody>
 </table>
 <h2 id="单个维度的卡尔曼滤波器实例："><a href="#单个维度的卡尔曼滤波器实例：" class="headerlink" title="单个维度的卡尔曼滤波器实例："></a>单个维度的卡尔曼滤波器实例：</h2><pre><code class="MATLAB"><span class="function"><span class="keyword">function</span> <span class="params">[ ]</span> = <span class="title">kalmanTest</span><span class="params">(  )</span></span>
@@ -356,7 +391,7 @@ n = <span class="built_in">randn</span>([<span class="number">1</span>, length(t
 s = <span class="built_in">sin</span>(<span class="number">2</span> * <span class="built_in">pi</span> * <span class="number">1</span> * t );
 x = s + n;
 R = cov(n(<span class="number">1</span>,:)); 
-<span class="comment">% plot(x(1,:), x(2,:))</span>
+
 
 <span class="comment">%%</span>
 Q = <span class="number">1e-7</span>;
@@ -367,7 +402,7 @@ hold on;
     [y(i), yp(i)] = KalmanFilter2(x(<span class="built_in">i</span>),Q,R);
 <span class="keyword">end</span>
 hold off
-<span class="comment">% yp = yp(1:2,:);</span>
+
 <span class="comment">%%</span>
 e = s - y;
 figure(<span class="number">1</span>);
@@ -405,7 +440,7 @@ G = [T^<span class="number">2</span>/<span class="number">2</span>;T]; <span cla
 H = [<span class="number">1</span> <span class="number">0</span>];     <span class="comment">%  ????</span>
 
 <span class="comment">% ????????</span>
-<span class="keyword">if</span> <span class="built_in">isempty</span>(Xu) || <span class="built_in">isempty</span>(Pu) || <span class="built_in">isempty</span>(I) || <span class="built_in">isempty</span>(Xp) || <span class="built_in">isempty</span>(Pp)<span class="comment">%|| isempty('T','var')</span>
+<span class="keyword">if</span> <span class="built_in">isempty</span>(Xu) || <span class="built_in">isempty</span>(Pu) || <span class="built_in">isempty</span>(I) || <span class="built_in">isempty</span>(Xp) || <span class="built_in">isempty</span>(Pp)
     Xu = [x; <span class="number">0</span>];
     Pu = [<span class="number">0</span> <span class="number">0</span>;<span class="number">0</span> <span class="number">0</span>];
     I  = [<span class="number">1</span> <span class="number">0</span>;<span class="number">0</span> <span class="number">1</span>];
@@ -413,7 +448,6 @@ H = [<span class="number">1</span> <span class="number">0</span>];     <span cla
     Pp = A * Pu * A' + G * Q * G';
 <span class="keyword">end</span>
 
-<span class="comment">% for i = 2:N</span>
 K  = Pp * H' * ( H * Pp * H' + R)^<span class="number">-1</span>;
 Xu = ( I - K * H ) * Xp + K * x;
 Pu = ( I - K * H ) * Pp;
@@ -448,11 +482,11 @@ yp = y;
     [y(:,i), yp(:,i)] = KalmanFilterXY(x(:,<span class="built_in">i</span>),Q,R);
 <span class="keyword">end</span>
 y = y([<span class="number">1</span>,<span class="number">3</span>],:);
-<span class="comment">% yp = yp(1:2,:);</span>
+
 <span class="comment">%%</span>
 e = y(<span class="number">1</span>,:) - y(<span class="number">2</span>,:);
 figure(<span class="number">1</span>);
-<span class="comment">% subplot(311);</span>
+
 hold on;
 plot(x(<span class="number">1</span>,:), x(<span class="number">2</span>,:),<span class="string">'color'</span>,[<span class="number">0.2</span> <span class="number">0.5</span> <span class="number">0.8</span>],<span class="string">'linewidth'</span>,<span class="number">2</span>);
 plot(y(<span class="number">1</span>,:), y(<span class="number">2</span>,:),<span class="string">'color'</span>,[<span class="number">1</span> <span class="number">0.6</span> <span class="number">0</span>],<span class="string">'linewidth'</span>,<span class="number">2</span>);
@@ -489,14 +523,12 @@ legend(<span class="string">'reserved'</span>,<span class="string">'filted'</spa
 <span class="comment">%  y(k+1) = H * X(k+1) + V(k+1); ????</span>
 
 <span class="keyword">persistent</span> Xu Pu I Xp Pp
-<span class="comment">% N = length(x);</span>
 T = <span class="number">1</span>;         <span class="comment">%  ???????1</span>
 F = [<span class="number">1</span> T <span class="number">0</span> <span class="number">0</span>; <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span>; <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> T; <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span>]; <span class="comment">%  ??????</span>
 <span class="comment">% G = [T^2/2 0; T 0; 0 T^2/2; 0 T]; %  ?????</span>
 H = [<span class="number">1</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>; <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span>];     <span class="comment">%  ????</span>
 
-<span class="comment">% ????????</span>
-<span class="keyword">if</span> <span class="built_in">isempty</span>(Xu) || <span class="built_in">isempty</span>(Pu) || <span class="built_in">isempty</span>(I) || <span class="built_in">isempty</span>(Xp) || <span class="built_in">isempty</span>(Pp)<span class="comment">%|| isempty('T','var')</span>
+<span class="keyword">if</span> <span class="built_in">isempty</span>(Xu) || <span class="built_in">isempty</span>(Pu) || <span class="built_in">isempty</span>(I) || <span class="built_in">isempty</span>(Xp) || <span class="built_in">isempty</span>(Pp)
     Pu = <span class="built_in">eye</span>(<span class="number">4</span>, <span class="number">4</span>);
     I  = <span class="built_in">eye</span>(<span class="number">4</span>);
     Xp = <span class="built_in">zeros</span>(<span class="number">4</span>, <span class="number">1</span>);
@@ -600,10 +632,10 @@ Xout2 = Xp;
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -624,7 +656,7 @@ Xout2 = Xp;
                 <a href="/archives/">
               
                   <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-name">Artikel</span>
                 </a>
               </div>
             
@@ -660,7 +692,7 @@ Xout2 = Xp;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tags-滤波器"><span class="nav-number">1.</span> <span class="nav-text">tags: 滤波器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5个核心公式"><span class="nav-number">2.</span> <span class="nav-text">5个核心公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预测部分："><span class="nav-number">2.1.</span> <span class="nav-text">预测部分：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拟合部分："><span class="nav-number">2.2.</span> <span class="nav-text">拟合部分：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单个维度的卡尔曼滤波器实例："><span class="nav-number">3.</span> <span class="nav-text">单个维度的卡尔曼滤波器实例：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于两个维度的卡尔曼滤波器实例："><span class="nav-number">4.</span> <span class="nav-text">对于两个维度的卡尔曼滤波器实例：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tags-滤波器"><span class="nav-number">1.</span> <span class="nav-text">tags: 滤波器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5个核心公式"><span class="nav-number">2.</span> <span class="nav-text">5个核心公式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预测部分："><span class="nav-number">2.1.</span> <span class="nav-text">预测部分：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#融合部分："><span class="nav-number">2.2.</span> <span class="nav-text">融合部分：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单个维度的卡尔曼滤波器实例："><span class="nav-number">3.</span> <span class="nav-text">单个维度的卡尔曼滤波器实例：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于两个维度的卡尔曼滤波器实例："><span class="nav-number">4.</span> <span class="nav-text">对于两个维度的卡尔曼滤波器实例：</span></a></li></ol></div>
             
 
           </div>
@@ -690,7 +722,7 @@ Xout2 = Xp;
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
